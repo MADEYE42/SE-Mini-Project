@@ -42,14 +42,13 @@ const registerController = async (req, res) => {
 };
 const loginController = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
+        const { email, password,role } = req.body;
+        if (!email || !password ||!role) {
             return res.status(400).send({
                 success: false,
-                message: 'Email and password are required.'
+                message: 'Email,password and Role are required.'
             });
         }
-
         const user = await userModels.findOne({ email });
         if (!user) {
             return res.status(404).send({
@@ -63,6 +62,13 @@ const loginController = async (req, res) => {
             return res.status(500).send({
                 success: false,
                 message: 'User password is missing in the database'
+            });
+        }
+        if (!user.role) {
+            console.error('User Role is undefined:', user);
+            return res.status(500).send({
+                success: false,
+                message: 'User role is missing in the database'
             });
         }
 

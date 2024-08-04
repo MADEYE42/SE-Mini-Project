@@ -1,60 +1,61 @@
-const mongoose = require('mongoose');
-const userSchema = new mongoose.Schema({
-    role:{
-        type:String,
-        required:[true,'Role is required'],
-        enum:['admin','organisation','user','hospital']
-        },
-        name:{
-            type:String,
-            required:function(){
-                if(this.role==='user'||this.role==='admin'){
-                    return true
-                }
-                return false
-            },
-        },
-        organisationName:{
-            type:String,
-            required:function() {
-                if(this.role==='organisation'){
-                    return true
-            }
-            return false
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema(
+  {
+    role: {
+      type: String,
+      required: [true, "role is required"],
+      enum: ["admin", "organisation", "donar", "hospital"],
+    },
+    name: {
+      type: String,
+      required: function () {
+        if (this.role === "user" || this.role === "admin") {
+          return true;
         }
-        },
-        hospitalName:{
-            type:String,
-            required:function() {
-                if(this.role==='hospital'){
-                    return true
-            }
-            return false
+        return false;
+      },
+    },
+    organisationName: {
+      type: String,
+      required: function () {
+        if (this.role === "organisation") {
+          return true;
         }
-        },
-    email:{
-        type:String,
-        required:[true,'Email is required'],
-        unique:true
+        return false;
+      },
     },
-    email:{
-        type:String,
-        required:[true,'Password is required'],
-        unique:true
+    hospitalName: {
+      type: String,
+      required: function () {
+        if (this.role === "hospital") {
+          return true;
+        }
+        return false;
+      },
     },
-    email:{
-        type:String,
+    email: {
+      type: String,
+      required: [true, "email is required"],
+      unique: true,
     },
-    address:{
-        type:String,
-        required:[true,'Address is required']
+    password: {
+      type: String,
+      required: [true, "password is requied"],
     },
-    phone:{
-        type:String,
-        required:[true,'Phone number is required']
+    website: {
+      type: String,
     },
-},
-{
-    timestamps:true
-})
-module.exports = mongoose.model('users',userSchema)
+    address: {
+      type: String,
+      required: [true, "address is required"],
+    },
+    phone: {
+      type: String,
+      required: [true, "phone numbe is required"],
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("users", userSchema);
